@@ -17,6 +17,9 @@ def make_stats_graph(type_of_plot, data_dict, x_label, y_label, title, start_dat
             # om ipv barchart linechart te maken. Doe ik voor profit (ziet er wat beter uit)
             plt.plot(data_dict.keys(), data_dict.values())
         plt.xlim(start_date, end_date)  # Set the visible limits of the x axis.
+        min_value = min(data_dict.values())
+        max_value = max(data_dict.values())
+        plt.ylim(0.8*min_value, 1.2*max_value)
         plt.xlabel(x_label)
         # plt.yaxis.set_major_formatter(str(y).replace(".",","))
         plt.ylabel(y_label)
@@ -115,7 +118,7 @@ def stats_process_numbers(product_name, start_date, end_date):
     except:
         print("file sold.csv kon niet worden geopend. ")
     make_stats_graph("bar", numbers_dict, "date", "number",
-                     f"Numbers of {product_name}s sold in period {start_date.strftime('%d-%m-%Y')}-{end_date.strftime('%d-%m-%Y')}", start_date, end_date)
+                     f"Numbers of {product_name}s sold in period {start_date.strftime('%d-%m-%Y')} until {end_date.strftime('%d-%m-%Y')}", start_date, end_date)
 
 
 def stats_process_buy_price(product_name, start_date, end_date):
@@ -146,7 +149,7 @@ def stats_process_buy_price(product_name, start_date, end_date):
         print("file bought.csv kon niet worden geopend. ")
     avg_bought_prices_dict = compute_avg_prices(mult_bought_prices_dict)
     make_stats_graph("bar", avg_bought_prices_dict, "date", "average buying price in eur",
-                     f"Average price of {product_name}s bought in period {start_date.strftime('%d-%m-%Y')}-{end_date.strftime('%d-%m-%Y')}",
+                     f"Average price of {product_name}s bought in period {start_date.strftime('%d-%m-%Y')} until {end_date.strftime('%d-%m-%Y')}",
                      start_date, end_date)
 
 
@@ -178,7 +181,7 @@ def stats_process_sell_price(product_name, start_date, end_date):
         print("file sold.csv kon niet worden geopend. ")
     avg_sell_prices_dict = compute_avg_prices(mult_sell_prices_dict)
     make_stats_graph("bar", avg_sell_prices_dict, "date", "average selling price in eur",
-                     f"Average price of {product_name}s sold in period {start_date.strftime('%d-%m-%Y')}-{end_date.strftime('%d-%m-%Y')}",
+                     f"Average price of {product_name}s sold in period {start_date.strftime('%d-%m-%Y')} until {end_date.strftime('%d-%m-%Y')}",
                      start_date, end_date)
 
 
@@ -240,14 +243,14 @@ def stats_process_profit(product_name, start_date, end_date):
             profit_dict[fill_date] = profit_value
         fill_date = fill_date+timedelta(days=1)
     make_stats_graph("line", profit_dict, "date", "profit in eur",
-                     f"Daily profit of {product_name}s for period {start_date.strftime('%d-%m-%Y')}-{end_date.strftime('%d-%m-%Y')}",
+                     f"Daily profit of {product_name}s for period {start_date.strftime('%d-%m-%Y')} until {end_date.strftime('%d-%m-%Y')}",
                      start_date, end_date)
 
 
 def stats_process_revenue(product_name, start_date, end_date):
     revenue_dict = get_revenue_dict(start_date, end_date, product_name)
     make_stats_graph("bar", revenue_dict, "date", "revenue in eur on date",
-                     f"Revenue of {product_name}s sold in period {start_date.strftime('%d-%m-%Y')}-{end_date.strftime('%d-%m-%Y')}",
+                     f"Revenue of {product_name}s sold in period {start_date.strftime('%d-%m-%Y')} until {end_date.strftime('%d-%m-%Y')}",
                      start_date, end_date)
 
 
