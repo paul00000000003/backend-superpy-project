@@ -19,7 +19,15 @@ def make_stats_graph(type_of_plot, data_dict, x_label, y_label, title, start_dat
         plt.xlim(start_date, end_date)  # Set the visible limits of the x axis.
         min_value = min(data_dict.values())
         max_value = max(data_dict.values())
-        plt.ylim(0.8*min_value, 1.2*max_value)
+        if min_value < 0:
+            min_value_yaxis = 1.2*min_value
+        else:
+            min_value_yaxis = 0.8*min_value
+        if max_value < 0:
+            max_value_yaxis = 0.8*max_value
+        else:
+            max_value_yaxis = 1.2*max_value
+        plt.ylim(min_value_yaxis, max_value_yaxis)
         plt.xlabel(x_label)
         # plt.yaxis.set_major_formatter(str(y).replace(".",","))
         plt.ylabel(y_label)
